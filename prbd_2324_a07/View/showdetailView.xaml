@@ -1,0 +1,74 @@
+﻿<f:DialogWindowBase x:Class="prbd_2324_a07.View.showdetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+xmlns:vm="clr-namespace:prbd_2324_a07.ViewModel"
+xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+                                 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid>
+        <DockPanel>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <ComboBox ItemsSource="{Binding Initiator}" DisplayMemberPath="Full_name" SelectedItem="{Binding SelectedUser}" Width="200"/>
+                </StackPanel>
+                <StackPanel>
+                    <Button Content="show" Command="{Binding showDetail}" CommandParameter="{Binding}" Margin="5"/>
+
+                </StackPanel>
+                
+                <StackPanel>
+                    <f:MyDataGrid x:Name="grid" ItemsSource="{Binding TricountView}" ToolTip="Select messages and press the 'Del' key to delete"
+                      AutoGenerateColumns="False" FontSize="12" IsReadOnly="False" Margin="5" CanUserAddRows="False"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" MaxHeight="160"
+                        SelectedItem="{Binding SelectedTricount}">
+                        
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Titre" Binding="{Binding Path=Title}" IsReadOnly="True" SortDirection="Descending"/>
+                            <DataGridTextColumn Header="Inititor" Binding="{Binding Path=CreatorId.Full_name}"  IsReadOnly="True"  />
+                            <DataGridTextColumn Header="Date" Binding="{Binding Path=Created_at}"   IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                        
+                    </f:MyDataGrid>
+                   
+                </StackPanel>
+                <StackPanel>
+                    <Button Content="showOperation" Command="{Binding showDetailOperation}" CommandParameter="{Binding}" Margin="5"/>
+
+                </StackPanel>
+
+
+                <StackPanel>
+                    <f:MyDataGrid x:Name="grid2" ItemsSource="{Binding OperationView}" ToolTip="Select messages and press the 'Del' key to delete"
+                    AutoGenerateColumns="False" FontSize="12" IsReadOnly="False" Margin="5" CanUserAddRows="False" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ScrollViewer.CanContentScroll="True" MaxHeight="160">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" IsReadOnly="True" SortDirection="Descending"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount}"  IsReadOnly="True"  />
+                            <DataGridTextColumn Header="Tricount" Binding="{Binding Path=TricountId.Title}" Width="*"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Operation_date" Binding="{Binding Path=Operation_date}"  IsReadOnly="True"  />
+
+                        </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding DeleteMessages}" CommandParameter="{Binding SelectedItemsList, ElementName=grid}" />
+                        </DataGrid.InputBindings>
+                    </f:MyDataGrid>
+
+                </StackPanel>
+                <StackPanel>
+                    <Button Content="Cancel" Width="70" Command="{Binding Cancel}" Margin="10" IsCancel="True" />
+
+                </StackPanel>
+                
+            </StackPanel>
+            
+        </DockPanel>
+
+
+    </Grid>
+</f:DialogWindowBase>

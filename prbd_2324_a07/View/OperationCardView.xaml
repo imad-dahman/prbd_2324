@@ -1,0 +1,42 @@
+﻿<f:UserControlBase x:Class="prbd_2324_a07.View.OperationCardView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+                   xmlns:vm="clr-namespace:prbd_2324_a07.ViewModel"
+                   mc:Ignorable="d"
+                   d:DataContext="{d:DesignInstance Type=vm:OperationCardViewModel, IsDesignTimeCreatable=False}"
+                   Height="42" Width="250">
+    <Border Background="LightGray" CornerRadius="10" Padding="5">
+
+
+        <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Première ligne -->
+        <DockPanel HorizontalAlignment="Left">
+            <TextBlock FontSize="12" Text="{Binding Title}" FontWeight="Bold" HorizontalAlignment="Left" />
+        </DockPanel>
+        <DockPanel HorizontalAlignment="Right">
+                <TextBlock FontSize="12" Text="{Binding Amount, StringFormat=N2}" FontWeight="Bold" />
+            <TextBlock FontSize="12" Text=" €" />
+        </DockPanel>
+
+        <!-- Deuxième ligne -->
+        <DockPanel HorizontalAlignment="Left" Grid.Row="2">
+            <TextBlock FontSize="12" Text="Paid by " HorizontalAlignment="Left" />
+            <TextBlock FontSize="12" Text="{Binding Initiator}" HorizontalAlignment="Left" />
+        </DockPanel>
+            <DockPanel HorizontalAlignment="Right" Grid.Row="2">
+                <TextBlock FontSize="12" Text="{Binding Date.Date, StringFormat=dd/MM/yyyy}"  HorizontalAlignment="Right"/>
+            </DockPanel>
+
+
+        </Grid>
+    </Border>
+</f:UserControlBase>
+

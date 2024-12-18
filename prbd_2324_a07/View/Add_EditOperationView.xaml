@@ -1,0 +1,91 @@
+﻿<f:DialogWindowBase x:Class="prbd_2324_a07.View.Add_EditOperationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+        xmlns:vm="clr-namespace:prbd_2324_a07.ViewModel"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+        mc:Ignorable="d"
+        x:Name="uc"
+        Title="Add Operation" Height="450" Width="350"
+        d:DataContext="{d:DesignInstance vm:Add_EditOperationViewModel}"
+        WindowStartupLocation="CenterScreen" 
+         >
+    
+
+    <DockPanel>
+        
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Delete" Width="70" Command="{Binding Delete}" Margin="10" Visibility="{c:Binding DataContext.EditOperation , ElementName=uc}" />
+            <Button Content="{Binding ButtonText}" Command="{Binding AddOrSave}" Width="70" Margin="10" IsDefault="True" />
+
+
+            <Button Content="Cancel" Width="70" Command="{Binding Cancel}" Margin="10" IsCancel="True" />
+
+
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Title:" Width="50" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Amount:" Width="50" VerticalAlignment="Center"  />
+                <TextBox Text="{Binding Amount,StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Width="200" PreviewTextInput="NumericTextBox" />
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Initiator:" Width="50" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Initiator}" DisplayMemberPath="Full_name" SelectedItem="{Binding SelectedUser}" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Date:" Width="50" VerticalAlignment="Center"/>
+                <DatePicker SelectedDate="{Binding Date,StringFormat=dd/MM/yyyy}" Width="200"  DisplayDateEnd="{Binding MaxDate, UpdateSourceTrigger=PropertyChanged}"
+                            DisplayDateStart="{Binding MinDate, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <Grid Margin="5" VerticalAlignment="Center">
+                <ItemsControl ItemsSource="{Binding RepartitionsViewModel}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBox IsChecked="{Binding UserChecked, Mode=TwoWay}" Command="{Binding DataContext.ToggleUserCheckCommand, RelativeSource={RelativeSource AncestorType={x:Type f:DialogWindowBase}}}" CommandParameter="{Binding}" VerticalAlignment="Center" Margin="5"/>
+
+                                <TextBlock Text="{Binding ParticipantFullName}" VerticalAlignment="Center" Grid.Column="1" Margin="5"/>
+
+                                <TextBox Text="{Binding Weight}" IsReadOnly="True" IsReadOnlyCaretVisible="False" Width="50" VerticalAlignment="Center" Margin="5" Grid.Column="2" HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Button Content="▲" Command="{Binding  DataContext.IncreaseWeightCommand , ElementName=uc}" CommandParameter="{Binding}" Margin="5"/>
+                                    <Button Content="▼" Command="{Binding DataContext.DecreaseWeightCommand , ElementName=uc}" CommandParameter="{Binding}" Margin="5"/>
+
+                                </StackPanel>
+
+
+
+                                <TextBox Text="{c:Binding AmountUser, StringFormat=N2,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="50" VerticalAlignment="Center" Margin="5" Grid.Column="4" HorizontalAlignment="Right" Visibility="{c:Binding IsVisible}"/>
+
+
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+
+
+
+        </StackPanel>
+
+
+    </DockPanel>
+</f:DialogWindowBase>
+
